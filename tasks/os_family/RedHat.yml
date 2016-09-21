@@ -11,9 +11,10 @@
 - name: making sure pip installed
   shell: which pip || curl -sSL https://bootstrap.pypa.io/get-pip.py | python
 
-- name: Install docker-py
-  pip: name=docker-py version=1.8.1 state=present
-
 - name: Install docker-compose
   pip: name=docker-compose state=present
 
+# docker-py need to install after docker-compose since ansible docker_container module still has a stupid bug with docker-py version
+# using docker-py==1.8.1 is only our option
+- name: Install docker-py
+  pip: name=docker-py version=1.8.1 state=present
