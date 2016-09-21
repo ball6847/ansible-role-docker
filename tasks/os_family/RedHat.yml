@@ -6,14 +6,14 @@
     dest=/etc/yum.repos.d/docker.repo
 
 - name: Install docker
-  yum: name={{ item }} state=latest
-  with_items:
-    - docker-engine
-    - python-docker-py
+  yum: name=docker-engine state=present
 
 - name: making sure pip installed
-  shell: curl -sSL https://bootstrap.pypa.io/get-pip.py | python
+  shell: which pip || curl -sSL https://bootstrap.pypa.io/get-pip.py | python
 
-- name: Install docker-compose through pip
-  pip: name=docker-compose state=latest
+- name: Install docker-py
+  pip: name=docker-py version=1.8.1 state=present
+
+- name: Install docker-compose
+  pip: name=docker-compose state=present
 
